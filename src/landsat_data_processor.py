@@ -12,9 +12,20 @@ def decode_satellite_filename(filename: str) -> dict[str] | None:
     Decodes a Landsat satellite filename into its constituent components and returns
     a dictionary with these components.
 
-    The filename is expected to follow a specific format outlined in the Landsat Collection 2 Data Dictionary:
-        Format: LXSS_LLLL_PPPRRR_YYYYMMDD_yyyymmdd_CC_TX_<SX>_<BX>.TIF
-        Link: https://www.usgs.gov/centers/eros/science/landsat-collection-2-data-dictionary#landsat_product_id_l2
+    The filename is expected to follow a specific format outlined in the Landsat Collection 2 Data Dictionary
+
+    Format: LXSS_LLLL_PPPRRR_YYYYMMDD_yyyymmdd_CC_TX_<SX>_<BX>.TIF
+    Link: https://www.usgs.gov/centers/eros/science/landsat-collection-2-data-dictionary#landsat_product_id_l2
+
+    LXSS - L (Landsat), X (Sensor), SS (#Satellite)
+    LLLL - Processing Correction Level
+    PPPRRR - WRS (Path & Row)
+    YYYYMMDD - Acquisition Date
+    yyyymmdd - Processing Date
+    CC - Collection number (02)
+    TX - Collection category
+    SX - Surface (Reflectance/Temperature)
+    BX - Band
 
     Args:
         filename (str): The satellite filename to decode.
@@ -22,16 +33,6 @@ def decode_satellite_filename(filename: str) -> dict[str] | None:
     Returns:
         dict[str] | None: A dictionary with the parsed filename components if the filename
         matches the expected format, None otherwise.
-
-        LXSS - L (Landsat), X (Sensor), SS (#Satellite)
-        LLLL - Processing Correction Level
-        PPPRRR - WRS (Path & Row)
-        YYYYMMDD - Acquisition Date
-        yyyymmdd - Processing Date
-        CC - Collection number (02)
-        TX - Collection category
-        SX - Surface (Reflectance/Temperature)
-        BX - Band
     """
     date_regex = r"(?:19|20)\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12][0-9]|3[01])"
     pattern = re.compile(
@@ -65,31 +66,32 @@ def organize_satellite_data(files: list[str]) -> dict[str, dict]:
     Organizes Landsat satellite file names into structured data by year.
     Extracts information such as satellite, collection details, and bands.
 
+    Structured Data:
+    {
+        "year": {
+            "satellites": ["LXSS"],
+            "collection_number": ["CC"],
+            "collection_category": ["TX"],
+            "values": [
+                {
+                    "satellite": "LXSS",
+                    "wrs": "PPPRRR",
+                    "acquisition_date": "YYYYMMDD",
+                    "processing_date": "yyyymmdd",
+                    "bands": ["SX_BX", ...]
+                },
+                ...
+            ],
+            "missing_months": ["01", "02", ...]
+        },
+        ...
+    }
+
     Args:
         files (list[str]): Satellite file names.
 
     Returns:
         dict[str, dict]: Structured data organized by year.
-
-        {
-            "year": {
-                "satellites": ["LXSS"],
-                "collection_number": ["CC"],
-                "collection_category": ["TX"],
-                "values": [
-                    {
-                        "satellite": "LXSS",
-                        "wrs": "PPPRRR",
-                        "acquisition_date": "YYYYMMDD",
-                        "processing_date": "yyyymmdd",
-                        "bands": ["SX_BX", ...]
-                    },
-                    ...
-                ],
-                "missing_months": ["01"]
-            },
-            ...
-        }
     """
     structured_data = defaultdict(
         lambda: {
