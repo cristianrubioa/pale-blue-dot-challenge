@@ -4,7 +4,7 @@ import re
 from collections import OrderedDict
 from collections import defaultdict
 
-from settings import settings
+from src.settings import settings
 
 
 def decode_satellite_filename(filename: str) -> dict[str] | None:
