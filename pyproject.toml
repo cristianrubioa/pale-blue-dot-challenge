@@ -1,0 +1,76 @@
+[tool.poetry]
+name = "pale-blue-dot-challenge"
+version = "0.1.0"
+description = ""
+authors = ["cristianrubioa <cristianrubioa@gmail.com>"]
+license = "LICENSE"
+readme = "README.md"
+packages = [{include = "pale_blue_dot_challenge"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pyyaml = "^6.0.1"
+autoflake = "^2.2.1"
+pydantic = "^2.5.3"
+pydantic-settings = "^2.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.extras]
+simplification = ["simplification"]
+
+[tool.poetry.group.dev.dependencies]
+ipdb = "^0.13.13"
+black = "^23.11.0"
+pep8 = "^1.7.1"
+pytest = "^7.4.3"
+isort = "^5.12.0"
+ruff = "^0.1.7"
+
+[tool.isort]
+force_single_line = true
+
+[tool.ruff]
+target-version = "py312"
+line-length = 123
+ignore = ["RUF001", "RUF012", "PLC1901", "COM812"]
+select = [
+  "E",
+  "F",
+  "W",
+  "C4",
+  "RUF",
+  "UP",
+  "B",
+  "EM",
+  "RET",
+  "FLY",
+  "SIM",
+  "PERF",
+  "ICN",
+  "YTT",
+  "ASYNC",
+  "TID",
+  "Q",
+  "PYI",
+  "FA",
+  "T10",
+  "PLC",
+  "PLE",
+  "ISC",
+  "G",
+  "INP",
+  "PIE",
+  "Q",
+  "RSE",
+  "TCH",
+  "INT",
+  "COM",
+  "ICN",
+  "SLOT",
+  "ASYNC",
+  "AIR",
+  "YTT",
+]
