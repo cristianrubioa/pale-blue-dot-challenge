@@ -5,23 +5,29 @@ from src.image_processor import clip_images_by_shapefile_geometries
 from src.image_processor import create_binary_images_from_landsat_bands
 from src.image_processor import create_true_color_images_from_landsat_bands
 from src.landsat_data_processor import create_satellite_images_paths
-from src.landsat_data_processor import organize_satellite_data
+from src.landsat_data_processor import organize_satellite_data_json
+from src.landsat_data_processor import organize_satellite_data_txt
 from src.settings import settings
 from src.utils import decode_satellite_filename
 
 
 def process_satellite_images_metadata() -> None:
     """
-    Processes Landsat satellite image files to extract and organize metadata.
+    Processes Landsat satellite image files to extract and organize metadata into JSON and text report formats.
 
-    Scans the designated directory for satellite images, extracts metadata using filename decoding,
-    organizes this data by year, and writes it as a JSON file. If no images are found, it exits with an error message.
+    This function scans a designated directory for satellite images, extracts metadata using filename decoding,
+    and organizes this data by year. It then writes the organized data into two files: one in JSON format and another
+    as a structured text report. If no images are found in the dataset, the function exits with an error message.
 
     Args:
-        - None
+        None
 
     Returns:
-        - None
+        None
+
+    The function creates two files:
+    - A JSON file containing structured metadata organized by year.
+    - A text file providing a metadata report organized by year and month.
     """
     image_filenames = [
         file
@@ -35,14 +41,24 @@ def process_satellite_images_metadata() -> None:
         print(decode_satellite_filename.__doc__)
         exit(1)
 
-    satellite_data = organize_satellite_data(image_filenames=image_filenames)
-    json_data = json.dumps(satellite_data, indent=4)
-    output_json_path = os.path.join(
+    # Create metadata json file
+    satellite_data_json = organize_satellite_data_json(image_filenames=image_filenames)
+    output_json_path_file = os.path.join(
         settings.IMAGES_DATASET.DATASET_PATH,
         settings.IMAGES_DATASET.ORIGINAL_DATASET_METADATA_FILE,
     )
-    with open(output_json_path, "w") as file:
+    json_data = json.dumps(satellite_data_json, indent=4)
+    with open(output_json_path_file, "w") as file:
         file.write(json_data)
+
+    # Create report txt file
+    satellite_data_txt = organize_satellite_data_txt(image_filenames=image_filenames)
+    output_txt_path_file = os.path.join(
+        settings.IMAGES_DATASET.DATASET_PATH,
+        settings.IMAGES_DATASET.ORIGINAL_DATASET_REPORT_FILE,
+    )
+    with open(output_txt_path_file, "w") as file:
+        file.write(satellite_data_txt)
 
 
 def process_and_clip_landsat_images() -> None:

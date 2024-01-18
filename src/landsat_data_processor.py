@@ -8,7 +8,7 @@ from src.settings import settings
 from src.utils import decode_satellite_filename
 
 
-def organize_satellite_data(image_filenames: list[str]) -> dict[str, dict]:
+def organize_satellite_data_json(image_filenames: list[str]) -> dict[str, dict]:
     """
     Organizes Landsat satellite file names into structured data by year.
     Extracts information such as satellite, collection details, and bands.
@@ -100,6 +100,74 @@ def organize_satellite_data(image_filenames: list[str]) -> dict[str, dict]:
             else structured_data[year][key]
             for key in structured_data[year]
         }
+
+    return organized_data
+
+
+def organize_satellite_data_txt(image_filenames: list[str]) -> str:
+    """
+    Organizes satellite image file names into a structured text report by year and month.
+    Extracts information such as acquisition date and band, and lists filenames accordingly.
+
+    Structured Data Format:
+    **2013**
+    Missing Months: 04, 05, 06, 07, 09, 11, ...
+
+    08
+    (B10) - LXSS_LLLL_PPPRRR_YYYYMMDD_yyyymmdd_CC_TX_<SX>_<BX>.TIF
+    ...
+
+    ...
+
+    ---------------------------------------------------------
+
+    **2014**
+    Missing Months: 01, 02, 03, ...
+
+    ...
+
+    Args:
+        - image_filenames (List[str]): A list of satellite image filenames.
+
+    Returns:
+        - str: A structured text report of satellite image metadata, organized by year and month.
+    """
+    structured_data = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
+
+    for filename in image_filenames:
+        details = decode_satellite_filename(filename=filename)
+        if not details:
+            print(f"Could not extract information from: {filename}")
+            continue
+
+        band = details["band"]
+        year, month = details["acquisition_date"][:4], details["acquisition_date"][4:6]
+        structured_data[year][month][band].append(filename)
+
+    organized_data = "Satellite Image Metadata Report\n\n"
+    organized_data += "This report provides information about satellite image files in the specified directory.\n\n\n\n"
+
+    years = sorted(structured_data.keys())
+    for year in years:
+        organized_data += f"**{year}**\n"
+        missing_months = {f"{i:02d}" for i in range(1, 13)} - structured_data[
+            year
+        ].keys()
+        if missing_months:
+            organized_data += (
+                "Missing Months: " + ", ".join(sorted(missing_months)) + "\n\n"
+            )
+
+        for month, bands_info in sorted(structured_data[year].items()):
+            organized_data += f"{month}\n"
+            for bands, files in sorted(bands_info.items()):
+                organized_data += f"({bands}) - {', '.join(files)}\n"
+            organized_data += "\n"
+
+        if year != years[-1]:
+            organized_data += (
+                "---------------------------------------------------------\n\n"
+            )
 
     return organized_data
 

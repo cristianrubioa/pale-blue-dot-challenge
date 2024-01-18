@@ -18,6 +18,7 @@ class ConfigSettings(BaseModel):
     # Files
     SHAPEFILE_SHP_FILE: str = "demo.shp"
     ORIGINAL_DATASET_METADATA_FILE: str = "landsat_images_data.json"
+    ORIGINAL_DATASET_REPORT_FILE: str = "landsat_images_report.txt"
     # Extra
     ORIGINAL_DATASET_IMAGE_EXTENSION: str = "TIF"
     RGB_COLOR_IMAGE_BANDS: list = ["B4", "B3", "B2"]
