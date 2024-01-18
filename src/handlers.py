@@ -51,7 +51,11 @@ def process_and_clip_landsat_images() -> None:
     first six images using specified shapefile geometries. The clipped images are saved
     in a designated output directory.
     """
-    with open(settings.IMAGES_DATASET.ORIGINAL_DATASET_METADATA_FILE) as file:
+    json_path_file = os.path.join(
+        settings.IMAGES_DATASET.DATASET_PATH,
+        settings.IMAGES_DATASET.ORIGINAL_DATASET_METADATA_FILE,
+    )
+    with open(json_path_file) as file:
         landsat_images_data = json.load(file)
 
     image_paths = create_satellite_images_paths(
