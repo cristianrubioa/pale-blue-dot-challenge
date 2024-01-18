@@ -1,10 +1,11 @@
-import json
 import os
 import re
 from collections import OrderedDict
 from collections import defaultdict
+from pathlib import Path
+from typing import Any
 
-from settings import settings
+from src.settings import settings
 
 
 def decode_satellite_filename(filename: str) -> dict[str] | None:
@@ -25,13 +26,14 @@ def decode_satellite_filename(filename: str) -> dict[str] | None:
     CC - Collection number (02)
     TX - Collection category
     SX - Surface (Reflectance/Temperature)
-    BX - Band
+    BX - Satellite bands
+    TIF - Image Data Extension
 
     Args:
-        filename (str): The satellite filename to decode.
+        - filename (str): The satellite filename to decode.
 
     Returns:
-        dict[str] | None: A dictionary with the parsed filename components if the filename
+        - dict[str] | None: A dictionary with the parsed filename components if the filename
         matches the expected format, None otherwise.
     """
     date_regex = r"(?:19|20)\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12][0-9]|3[01])"
@@ -61,7 +63,7 @@ def decode_satellite_filename(filename: str) -> dict[str] | None:
     return None
 
 
-def organize_satellite_data(files: list[str]) -> dict[str, dict]:
+def organize_satellite_data(image_filenames: list[str]) -> dict[str, dict]:
     """
     Organizes Landsat satellite file names into structured data by year.
     Extracts information such as satellite, collection details, and bands.
@@ -70,6 +72,7 @@ def organize_satellite_data(files: list[str]) -> dict[str, dict]:
     {
         "year": {
             "satellites": ["LXSS"],
+            "correction_level": ["L2SP"],
             "collection_number": ["CC"],
             "collection_category": ["TX"],
             "values": [
@@ -88,10 +91,10 @@ def organize_satellite_data(files: list[str]) -> dict[str, dict]:
     }
 
     Args:
-        files (list[str]): Satellite file names.
+        - image_filenames (list[str]): Satellite file names.
 
     Returns:
-        dict[str, dict]: Structured data organized by year.
+        - dict[str, dict]: Structured data organized by year.
     """
     structured_data = defaultdict(
         lambda: {
@@ -103,8 +106,8 @@ def organize_satellite_data(files: list[str]) -> dict[str, dict]:
         }
     )
 
-    for filename in files:
-        details = decode_satellite_filename(filename)
+    for filename in image_filenames:
+        details = decode_satellite_filename(filename=filename)
         if details:
             year = details["acquisition_date"][:4]
             key = (
@@ -157,24 +160,34 @@ def organize_satellite_data(files: list[str]) -> dict[str, dict]:
     return organized_data
 
 
-def main():
-    all_images_files = [
-        file
-        for file in os.listdir(settings.IMAGES_DATASET.ORIGINAL_DATASET_PATH)
-        if file.endswith(".TIF")
-    ]
-    if not all_images_files:
-        print(
-            "The dataset is empty. Please check that you have images in the correct format."
-        )
-        print(decode_satellite_filename.__doc__)
-        exit(1)
+def create_satellite_images_paths(
+    landsat_images_data: dict[str, Any], image_directory: Path
+) -> list[str]:
+    """
+    Generates a list of file paths for satellite images based on input data.
 
-    satellite_data = organize_satellite_data(all_images_files)
-    json_data = json.dumps(satellite_data, indent=4)
-    with open(settings.IMAGES_DATASET.ORIGINAL_DATASET_METADATA_FILE, "w") as file:
-        file.write(json_data)
+    Args:
+        - landsat_images_data (dict[str, Any]): A dictionary containing satellite image metadata.
+            The data of the file that is defined in <settings.IMAGES_DATASET.ORIGINAL DATASET METADATA_FILE>
+        - image_directory (Path): The directory where the image files are stored.
 
+    Returns:
+        - list[str]: A list of file paths for the satellite images.
+    """
+    image_paths = []
+    for year, image_data in landsat_images_data.items():
+        _ = year
+        correction_level = image_data["correction_level"][0]
+        collection_number = image_data["collection_number"][0]
+        collection_category = image_data["collection_category"][0]
 
-if __name__ == "__main__":
-    main()
+        for value in image_data["values"]:
+            for band in value["bands"]:
+                filename = (
+                    f'{value["satellite"]}_{correction_level}_{value["wrs"]}'
+                    f'_{value["acquisition_date"]}_{value["processing_date"]}_{collection_number}'
+                    f"_{collection_category}_{band}.{settings.IMAGES_DATASET.ORIGINAL_DATASET_IMAGE_EXTENSION}"
+                )
+                file_path = os.path.join(image_directory, filename)
+                image_paths.append(file_path)
+    return image_paths
