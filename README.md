@@ -31,7 +31,7 @@ To set up the project, follow these steps:
 You can download sample images for testing from the provided Google Drive link:
 [Sample dataset](https://drive.google.com/drive/folders/1_DUHhFlpFfi1zrTE6V-uOZayNhzoUo3I?usp=sharing).
 These images are test downloads from [The USGS Earth Explorer](https://earthexplorer.usgs.gov/), covering a specific area of interest defined by the shapefile files.
-Access the [shapefile](https://github.com/cristianrubioa/pale-blue-dot-challenge/tree/main/shapefile) folder in the repository. The Google Drive folder contains a more extensive sample of the collected images. Here, we only include a couple of images as a demonstration of the tool's use, mainly due to the repository's space limitations.
+Access the [shapefile](https://github.com/cristianrubioa/pale-blue-dot-challenge/tree/main/shapefile) folder in the repository. The Google Drive folder contains a more extensive sample of the collected images. [Here](https://github.com/cristianrubioa/pale-blue-dot-challenge/tree/main/dataset/original_dataset), we only include a couple of images as a demonstration of the tool's use, mainly due to the repository's space limitations.
 
 4. **Activate the Virtual Environment**:
    To activate the virtual environment created by Poetry, run:
@@ -40,6 +40,14 @@ Access the [shapefile](https://github.com/cristianrubioa/pale-blue-dot-challenge
    ```
 
    This will allow you to run scripts and use packages within the virtual environment.
+
+5. **Set Up Jupyter Kernel**:
+   If you want to run the lab within the environment created by Poetry, you should run the following command to set up a Jupyter kernel for the project:
+   ```bash
+   python -m ipykernel install --user --name=<project_name>
+   ```
+
+   Replace `project_name` with the name you wish to give to the Jupyter kernel. This will enable you to use Jupyter notebooks with the virtual environment and dependencies managed by Poetry.
 
 ## Usage
 
