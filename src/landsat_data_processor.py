@@ -4,7 +4,7 @@ import re
 from collections import OrderedDict
 from collections import defaultdict
 
-from src.settings import settings
+from settings import settings
 
 
 def decode_satellite_filename(filename: str) -> dict[str] | None:
@@ -14,7 +14,7 @@ def decode_satellite_filename(filename: str) -> dict[str] | None:
 
     The filename is expected to follow a specific format outlined in the Landsat Collection 2 Data Dictionary
 
-    Format: LXSS_LLLL_PPPRRR_YYYYMMDD_yyyymmdd_CC_TX_<SX>_<BX>.TIF
+    Filename Format: LXSS_LLLL_PPPRRR_YYYYMMDD_yyyymmdd_CC_TX_<SX>_<BX>.TIF
     Link: https://www.usgs.gov/centers/eros/science/landsat-collection-2-data-dictionary#landsat_product_id_l2
 
     LXSS - L (Landsat), X (Sensor), SS (#Satellite)
@@ -66,7 +66,7 @@ def organize_satellite_data(files: list[str]) -> dict[str, dict]:
     Organizes Landsat satellite file names into structured data by year.
     Extracts information such as satellite, collection details, and bands.
 
-    Structured Data:
+    Structured Data Format:
     {
         "year": {
             "satellites": ["LXSS"],
@@ -96,6 +96,7 @@ def organize_satellite_data(files: list[str]) -> dict[str, dict]:
     structured_data = defaultdict(
         lambda: {
             "satellites": set(),
+            "correction_level": set(),
             "collection_number": set(),
             "collection_category": set(),
             "values": {},
@@ -113,6 +114,7 @@ def organize_satellite_data(files: list[str]) -> dict[str, dict]:
                 details["processing_date"],
             )
             structured_data[year]["satellites"].add(details["satellite"])
+            structured_data[year]["correction_level"].add(details["correction_level"])
             structured_data[year]["collection_number"].add(details["collection_number"])
             structured_data[year]["collection_category"].add(
                 details["collection_category"]

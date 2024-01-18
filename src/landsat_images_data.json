@@ -3,6 +3,9 @@
         "satellites": [
             "LC08"
         ],
+        "correction_level": [
+            "L2SP"
+        ],
         "collection_number": [
             "02"
         ],
@@ -69,6 +72,9 @@
         "satellites": [
             "LC08"
         ],
+        "correction_level": [
+            "L2SP"
+        ],
         "collection_number": [
             "02"
         ],
@@ -108,6 +114,9 @@
     "2015": {
         "satellites": [
             "LC08"
+        ],
+        "correction_level": [
+            "L2SP"
         ],
         "collection_number": [
             "02"
@@ -200,6 +209,9 @@
     "2016": {
         "satellites": [
             "LC08"
+        ],
+        "correction_level": [
+            "L2SP"
         ],
         "collection_number": [
             "02"
@@ -319,6 +331,9 @@
         "satellites": [
             "LC08"
         ],
+        "correction_level": [
+            "L2SP"
+        ],
         "collection_number": [
             "02"
         ],
@@ -384,6 +399,9 @@
     "2018": {
         "satellites": [
             "LC08"
+        ],
+        "correction_level": [
+            "L2SP"
         ],
         "collection_number": [
             "02"
@@ -463,6 +481,9 @@
     "2019": {
         "satellites": [
             "LC08"
+        ],
+        "correction_level": [
+            "L2SP"
         ],
         "collection_number": [
             "02"
@@ -595,6 +616,9 @@
         "satellites": [
             "LC08"
         ],
+        "correction_level": [
+            "L2SP"
+        ],
         "collection_number": [
             "02"
         ],
@@ -724,8 +748,11 @@
     },
     "2021": {
         "satellites": [
-            "LC08",
-            "LC09"
+            "LC09",
+            "LC08"
+        ],
+        "correction_level": [
+            "L2SP"
         ],
         "collection_number": [
             "02"
@@ -843,8 +870,11 @@
     },
     "2022": {
         "satellites": [
-            "LC08",
-            "LC09"
+            "LC09",
+            "LC08"
+        ],
+        "correction_level": [
+            "L2SP"
         ],
         "collection_number": [
             "02"
@@ -949,8 +979,11 @@
     },
     "2023": {
         "satellites": [
-            "LC08",
-            "LC09"
+            "LC09",
+            "LC08"
+        ],
+        "correction_level": [
+            "L2SP"
         ],
         "collection_number": [
             "02"
