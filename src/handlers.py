@@ -2,10 +2,12 @@ import json
 import os
 
 from src.image_processor import clip_images_by_shapefile_geometries
+from src.image_processor import create_binary_images_from_landsat_bands
+from src.image_processor import create_true_color_images_from_landsat_bands
 from src.landsat_data_processor import create_satellite_images_paths
-from src.landsat_data_processor import decode_satellite_filename
 from src.landsat_data_processor import organize_satellite_data
 from src.settings import settings
+from src.utils import decode_satellite_filename
 
 
 def process_satellite_images_metadata() -> None:
@@ -70,4 +72,28 @@ def process_and_clip_landsat_images() -> None:
         image_paths=image_paths,
         shapefile_path_file=shapefile_path_file,
         output_directory=settings.IMAGES_DATASET.ROI_CROPPED_DATASET_PATH,
+    )
+
+
+def process_bands_for_true_color_image() -> None:
+    image_paths = [
+        os.path.join(settings.IMAGES_DATASET.ROI_CROPPED_DATASET_PATH, file)
+        for file in os.listdir(settings.IMAGES_DATASET.ROI_CROPPED_DATASET_PATH)
+        if file.endswith(f".{settings.IMAGES_DATASET.ORIGINAL_DATASET_IMAGE_EXTENSION}")
+    ]
+    create_true_color_images_from_landsat_bands(
+        image_paths=image_paths,
+        output_directory=settings.IMAGES_DATASET.ROI_CROPPED_COLOR_DATASET_PATH,
+    )
+
+
+def process_bands_for_binary_image() -> None:
+    image_paths = [
+        os.path.join(settings.IMAGES_DATASET.ROI_CROPPED_DATASET_PATH, file)
+        for file in os.listdir(settings.IMAGES_DATASET.ROI_CROPPED_DATASET_PATH)
+        if file.endswith(f".{settings.IMAGES_DATASET.ORIGINAL_DATASET_IMAGE_EXTENSION}")
+    ]
+    create_binary_images_from_landsat_bands(
+        image_paths=image_paths,
+        output_directory=settings.IMAGES_DATASET.ROI_CROPPED_BINARY_DATASET_PATH,
     )

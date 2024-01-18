@@ -112,7 +112,7 @@ def replace_suffix_and_extension(
         - str: The modified filename with the new suffix and/or extension.
     """
     name, ext = os.path.splitext(filename)
-    name = name.rsplit("_", 1)[0] if "_" in name else name
+    name = name.rsplit("_", 3)[0]
     name += f"_{suffix}" if suffix else "UNDEFINED"
-    ext = f".{extension}" if extension else ext
-    return f"{name}{ext}"
+    ext = extension if extension else ext
+    return f"{name}.{ext}"

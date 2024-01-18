@@ -20,6 +20,8 @@ class ConfigSettings(BaseModel):
     ORIGINAL_DATASET_METADATA_FILE: str = "landsat_images_data.json"
     # Extra
     ORIGINAL_DATASET_IMAGE_EXTENSION: str = "TIF"
+    RGB_COLOR_IMAGE_BANDS: list = ["B4", "B3", "B2"]
+    BINARY_IMAGE_BANDS: list = ["B3", "B6"]
 
 
 class Settings(BaseSettings):
