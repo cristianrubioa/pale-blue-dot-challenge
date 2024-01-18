@@ -748,8 +748,8 @@
     },
     "2021": {
         "satellites": [
-            "LC09",
-            "LC08"
+            "LC08",
+            "LC09"
         ],
         "correction_level": [
             "L2SP"
@@ -870,8 +870,8 @@
     },
     "2022": {
         "satellites": [
-            "LC09",
-            "LC08"
+            "LC08",
+            "LC09"
         ],
         "correction_level": [
             "L2SP"
@@ -979,8 +979,8 @@
     },
     "2023": {
         "satellites": [
-            "LC09",
-            "LC08"
+            "LC08",
+            "LC09"
         ],
         "correction_level": [
             "L2SP"
