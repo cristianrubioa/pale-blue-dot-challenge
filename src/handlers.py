@@ -76,6 +76,13 @@ def process_and_clip_landsat_images() -> None:
 
 
 def process_bands_for_true_color_image() -> None:
+    """
+    Processes Landsat band images to create true color images.
+
+    This function reads Landsat band images from a specified directory, filters them based on the file extension,
+    and then uses these images to create true color images. The resulting true color images are saved
+    in a designated output directory.
+    """
     image_paths = [
         os.path.join(settings.IMAGES_DATASET.ROI_CROPPED_DATASET_PATH, file)
         for file in os.listdir(settings.IMAGES_DATASET.ROI_CROPPED_DATASET_PATH)
@@ -88,6 +95,14 @@ def process_bands_for_true_color_image() -> None:
 
 
 def process_bands_for_binary_image() -> None:
+    """
+    Processes Landsat band images to create binary images.
+
+    This function reads Landsat band images from a specified directory, filters them based on the file extension,
+    and then uses these images to create binary images. The binary images are generated based on the Normalized
+    Difference Snow Index (NDSI) using specific bands. The resulting binary images are saved in a designated
+    output directory.
+    """
     image_paths = [
         os.path.join(settings.IMAGES_DATASET.ROI_CROPPED_DATASET_PATH, file)
         for file in os.listdir(settings.IMAGES_DATASET.ROI_CROPPED_DATASET_PATH)

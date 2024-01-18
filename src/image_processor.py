@@ -107,6 +107,9 @@ def create_true_color_images_from_landsat_bands(
     and generates true color images saved as PNG files in the specified directory.
     Missing bands for a specific date are reported, and processing continues with the next group of images.
     """
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
+
     grouped_paths = group_images_by_date(image_paths)
     required_bands = set(settings.IMAGES_DATASET.RGB_COLOR_IMAGE_BANDS)
 
@@ -160,6 +163,9 @@ def create_binary_images_from_landsat_bands(
     (NDSI) using bands B3 and B6. The binary images are saved as PNG files in the specified directory.
     Missing bands for a specific date are reported, and processing continues with the next group of images.
     """
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
+
     grouped_paths = group_images_by_date(image_paths)
     required_bands = set(settings.IMAGES_DATASET.BINARY_IMAGE_BANDS)
 
