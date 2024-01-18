@@ -17,7 +17,7 @@ class ConfigSettings(BaseModel):
     ROI_CROPPED_BINARY_DATASET_PATH: Path = DATASET_PATH / "roi_cropped_binary_dataset"
     # Files
     SHAPEFILE_SHP_FILE: str = "demo.shp"
-    ORIGINAL_DATASET_METADATA_FILE: str = "landsat_images_data.json"
+    ORIGINAL_DATASET_METADATA_FILE: str = "landsat_images_metadata.json"
     ORIGINAL_DATASET_REPORT_FILE: str = "landsat_images_report.txt"
     # Extra
     ORIGINAL_DATASET_IMAGE_EXTENSION: str = "TIF"
