@@ -1,0 +1,1 @@
+temperature_roi_min: -72.66094970703125, temperature_roi_max: 51.255950927734375
