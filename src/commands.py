@@ -3,6 +3,7 @@ import typer
 from src.handlers import process_and_clip_landsat_images
 from src.handlers import process_bands_for_binary_image
 from src.handlers import process_bands_for_ndsi_image
+from src.handlers import process_bands_for_temperature_image
 from src.handlers import process_bands_for_true_color_image
 from src.handlers import process_satellite_images_metadata
 from src.handlers import process_snow_cover_percentange
@@ -50,6 +51,14 @@ def ndsi():
 
 
 @app.command(
+    short_help="Create temperature images.",
+    help=process_bands_for_temperature_image.__doc__,
+)
+def temp():
+    process_bands_for_temperature_image()
+
+
+@app.command(
     short_help="Get and Add Snow cover percentage",
     help=process_snow_cover_percentange.__doc__,
 )
@@ -60,5 +69,5 @@ def snow():
 @app.command(
     short_help="Get and Add Temperature ROI", help=process_temperature_roi.__doc__
 )
-def temp():
+def temproi():
     process_temperature_roi()

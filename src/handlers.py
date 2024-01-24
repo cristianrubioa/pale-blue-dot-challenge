@@ -4,6 +4,7 @@ import os
 from src.image_processor import clip_images_by_shapefile_geometries
 from src.image_processor import create_binary_images_from_landsat_bands
 from src.image_processor import create_ndsi_images_from_landsat_bands
+from src.image_processor import create_temperature_images_from_landsat_bands
 from src.image_processor import create_true_color_images_from_landsat_bands
 from src.image_processor import get_and_add_snow_cover_percentage
 from src.image_processor import get_and_add_temperature_roi
@@ -173,6 +174,26 @@ def process_bands_for_ndsi_image() -> None:
     create_ndsi_images_from_landsat_bands(
         image_paths=image_paths,
         output_directory=settings.IMAGES_DATASET.ROI_CROPPED_NDSI_DATASET_PATH,
+    )
+
+
+def process_bands_for_temperature_image() -> None:
+    suffix = "ST_B10_CROPPED"
+    image_paths = [
+        os.path.join(settings.IMAGES_DATASET.ROI_CROPPED_DATASET_PATH, file)
+        for file in os.listdir(settings.IMAGES_DATASET.ROI_CROPPED_DATASET_PATH)
+        if file.endswith(
+            f"{suffix}.{settings.IMAGES_DATASET.ORIGINAL_DATASET_IMAGE_EXTENSION}"
+        )
+    ]
+    temperature_roi_boundaries_file = os.path.join(
+        settings.IMAGES_DATASET.DATASET_PATH,
+        settings.IMAGES_DATASET.TEMPERATURE_ROI_BOUNDARIES_FILE,
+    )
+    create_temperature_images_from_landsat_bands(
+        image_paths=image_paths,
+        output_directory=settings.IMAGES_DATASET.ROI_CROPPED_TEMPERATURE_DATASET_PATH,
+        temperature_roi_boundaries_file=temperature_roi_boundaries_file,
     )
 
 

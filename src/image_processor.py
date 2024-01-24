@@ -281,6 +281,55 @@ def create_ndsi_images_from_landsat_bands(
         plt.close()
 
 
+def create_temperature_images_from_landsat_bands(
+    image_paths: list[str], output_directory: str, temperature_roi_boundaries_file: str
+) -> None:
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
+
+    is_temp_boundaries_file = os.path.exists(temperature_roi_boundaries_file)
+    if is_temp_boundaries_file:
+        with open(temperature_roi_boundaries_file) as file:
+            temperature_roi_boundaries_data = file.read().strip("'").split(",")
+
+        temperature_roi_min = np.floor(
+            float(temperature_roi_boundaries_data[0].split(":")[1].strip())
+        )
+        temperature_roi_max = np.floor(
+            float(temperature_roi_boundaries_data[1].split(":")[1].strip())
+        )
+    else:
+        print(
+            f"The file at the specified path {temperature_roi_boundaries_file} does not exist in the directory"
+        )
+        print("The images will be saved but without defined minimum and maximum limits")
+
+    for image_path in image_paths:
+        image = read_landsat_band(image_path)
+        value = (
+            (image * settings.IMAGES_DATASET.L2SP_TEMPERATURE_SCALE_FACTOR)
+            + settings.IMAGES_DATASET.L2SP_TEMPERATURE_ADDITIVE_OFFSET
+            - settings.IMAGES_DATASET.CELCIUS_SCALER_FACTOR
+        )
+        plt.figure()
+        if is_temp_boundaries_file:
+            plt.imshow(
+                value,
+                vmin=temperature_roi_min,
+                vmax=temperature_roi_max,
+                cmap="RdYlBu_r",
+            )
+        plt.imshow(value, cmap="RdYlBu_r")
+        plt.axis("off")
+        filename = os.path.basename(image_path)
+        new_filename = replace_suffix_and_extension(
+            filename=filename, suffix="TEMPERATURE", extension="png"
+        )
+        output_image_path = os.path.join(output_directory, new_filename)
+        plt.savefig(output_image_path, bbox_inches="tight", pad_inches=0)
+        plt.close()
+
+
 def get_and_add_snow_cover_percentage(
     base_mask_image_path: str,
     image_paths: list[str],
