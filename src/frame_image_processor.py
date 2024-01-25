@@ -292,47 +292,53 @@ def display_line_plot(index, visualization_params, ax=None):
     )
 
 
-visualization_params = data_for_line_plot()
-for index in range(len(visualization_params["JSON_DATA"]["date"]["all"])):
-    fig = plt.figure(figsize=(11, 8))
-    gs = GridSpec(2, 3, figure=fig)
+def main_image_frame_visualization():
+    visualization_params = data_for_line_plot()
+    for index in range(len(visualization_params["JSON_DATA"]["date"]["all"])):
+        fig = plt.figure(figsize=(11, 8))
+        gs = GridSpec(2, 3, figure=fig)
 
-    # create sub plots as grid
-    ax1 = fig.add_subplot(gs[0, 0])
-    ax2 = fig.add_subplot(gs[0, 1])
-    ax3 = fig.add_subplot(gs[0, 2])
-    ax4 = fig.add_subplot(gs[1, :])
+        # create sub plots as grid
+        ax1 = fig.add_subplot(gs[0, 0])
+        ax2 = fig.add_subplot(gs[0, 1])
+        ax3 = fig.add_subplot(gs[0, 2])
+        ax4 = fig.add_subplot(gs[1, :])
 
-    image_filename = (
-        visualization_params["JSON_DATA"]["key"]["all"][index] + "_{band}_CROPPED.TIF"
-    )
-    images_dict = get_images_to_show(image_filename)
+        image_filename = (
+            visualization_params["JSON_DATA"]["key"]["all"][index]
+            + "_{band}_CROPPED.TIF"
+        )
+        images_dict = get_images_to_show(image_filename)
 
-    # Display images at row 0
-    display_images(images=images_dict, axes=[ax1, ax2, ax3], figure=fig)
+        # Display images at row 0
+        display_images(images=images_dict, axes=[ax1, ax2, ax3], figure=fig)
 
-    # Display line plot
-    display_line_plot(index, visualization_params, ax=ax4)
-    subtitle_date = visualization_params["JSON_DATA"]["date"]["all"][index].strftime(
-        "%B %d, %Y"
-    )
-    plt.suptitle(
-        subtitle_date,
-        fontsize=14,
-        fontweight="bold",
-        color="white",
-        # x=0.05,
-        y=0.98,
-        bbox={"facecolor": "#ff5555", "edgecolor": "gray", "boxstyle": "round,pad=0.3"},
-    )
-    plt.tight_layout()
-    new_filename = replace_suffix_and_extension(
-        filename=image_filename, suffix="VIDEO_FRAME", extension="png"
-    )
-    output_directory = os.path.join(
-        settings.IMAGES_DATASET.DATASET_PATH,
-        settings.IMAGES_DATASET.FRAME_VISUALIZATION_DATASET_PATH,
-    )
-    output_image_path = os.path.join(output_directory, new_filename)
-    plt.savefig(output_image_path, bbox_inches="tight", pad_inches=0, dpi=300)
-    plt.close()
+        # Display line plot
+        display_line_plot(index, visualization_params, ax=ax4)
+        subtitle_date = visualization_params["JSON_DATA"]["date"]["all"][
+            index
+        ].strftime("%B %d, %Y")
+        plt.suptitle(
+            subtitle_date,
+            fontsize=14,
+            fontweight="bold",
+            color="white",
+            # x=0.05,
+            y=0.98,
+            bbox={
+                "facecolor": "#ff5555",
+                "edgecolor": "gray",
+                "boxstyle": "round,pad=0.3",
+            },
+        )
+        plt.tight_layout()
+        new_filename = replace_suffix_and_extension(
+            filename=image_filename, suffix="VIDEO_FRAME", extension="png"
+        )
+        output_directory = os.path.join(
+            settings.IMAGES_DATASET.DATASET_PATH,
+            settings.IMAGES_DATASET.FRAME_VISUALIZATION_DATASET_PATH,
+        )
+        output_image_path = os.path.join(output_directory, new_filename)
+        plt.savefig(output_image_path, bbox_inches="tight", pad_inches=0, dpi=300)
+        plt.close()
