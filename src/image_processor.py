@@ -284,6 +284,23 @@ def create_ndsi_images_from_landsat_bands(
 def create_temperature_images_from_landsat_bands(
     image_paths: list[str], output_directory: str, temperature_roi_boundaries_file: str
 ) -> None:
+    """
+    Generates temperature images from Landsat band images, with optional ROI (Region of Interest) temperature boundaries.
+
+    This function processes each Landsat band image provided in `image_paths` to calculate and visualize temperature data.
+    The temperature is calculated using scale factors and offsets defined in settings.IMAGES_DATASET. If a temperature ROI
+    boundaries file is provided and exists, the temperature images are visualized with these min and max boundaries.
+    Otherwise, the images are saved without defined limits. The temperature images are saved as PNG files in the
+    specified `output_directory`.
+
+    Args:
+        - image_paths: A list of paths to Landsat band images.
+        - output_directory: Path to the directory where the output images will be saved.
+        - temperature_roi_boundaries_file: Path to a file containing temperature ROI boundaries, if available.
+
+    Returns:
+        - None
+    """
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
 
@@ -387,6 +404,25 @@ def get_and_add_snow_cover_percentage(
 def get_and_add_temperature_roi(
     image_paths: list[str], output_directory: str, output_directory_temp_boundaries: str
 ) -> None:
+    """
+    Calculates and adds temperature Region of Interest (ROI) data
+    to Landsat images metadata and saves temperature boundaries.
+
+    This function processes each Landsat band image in `image_paths` to calculate the temperature using specific
+    scale factors and offsets defined in settings.IMAGES_DATASET. It updates the metadata of each Landsat image
+    with the calculated mean temperature as the temperature ROI. The updated metadata is saved in JSON format
+    in `output_directory`. Additionally, the function determines the minimum and maximum temperatures across
+    all images and saves these as temperature ROI boundaries in a text file in `output_directory_temp_boundaries`.
+
+    Args:
+        - image_paths: A list of paths to Landsat band images.
+        - output_directory: Path to the directory where the updated metadata JSON file will be saved.
+        - output_directory_temp_boundaries: Path to the directory where the temperature ROI boundaries
+            text file will be saved.
+
+    Returns:
+        - None
+    """
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
 

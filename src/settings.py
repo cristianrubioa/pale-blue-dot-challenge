@@ -19,12 +19,15 @@ class ConfigSettings(BaseModel):
     ROI_CROPPED_TEMPERATURE_DATASET_PATH: Path = (
         DATASET_PATH / "roi_clipped_temperature"
     )
+    FRAME_VISUALIZATION_DATASET_PATH: Path = DATASET_PATH / "frame_visualization"
+    FRAME_VIDEO_DATASET_PATH: Path = DATASET_PATH / "video"
     # Files
     SHAPEFILE_SHP_FILE: str = "demo.shp"
     ORIGINAL_DATASET_METADATA_FILE: str = "landsat_images_metadata.json"
     ORIGINAL_DATASET_REPORT_FILE: str = "landsat_images_report.txt"
     DATASET_METADATA_FILE_TAGS: str = "landsat_images_tags.json"
     TEMPERATURE_ROI_BOUNDARIES_FILE: str = "temperature_roi_boundaries.txt"
+    FRAME_VIDEO_FILE: str = "oibur_video.mp4"
     # Factors
     BINARY_IMAGE_NDSI_THRESHOLD: float = 0.4
     CELCIUS_SCALER_FACTOR: float = 273.15

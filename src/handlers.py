@@ -178,6 +178,21 @@ def process_bands_for_ndsi_image() -> None:
 
 
 def process_bands_for_temperature_image() -> None:
+    """
+    Processes Landsat band images to create temperature images.
+
+    This function selects Landsat band images with a specific suffix from a designated directory.
+    It then processes these images to generate temperature images using the `create_temperature_images_from_landsat_bands`
+    function. The temperature images are calculated using specific scale factors and offsets and are saved in a specified
+    output directory. Optionally, the function uses a temperature ROI boundaries file to set the minimum and maximum
+    temperature limits for visualization.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
     suffix = "ST_B10_CROPPED"
     image_paths = [
         os.path.join(settings.IMAGES_DATASET.ROI_CROPPED_DATASET_PATH, file)
@@ -245,6 +260,20 @@ def process_snow_cover_percentange() -> None:
 
 
 def process_temperature_roi() -> None:
+    """
+    Processes Landsat band images to calculate and add temperature Region of Interest (ROI) data.
+
+    This function selects Landsat band images with a specific suffix from a designated directory. It then calculates
+    the temperature for each image using the `get_and_add_temperature_roi` function. The calculated temperature data
+    is added to the metadata of each image and saved in JSON format. Additionally, the function determines the minimum
+    and maximum temperatures across all images and saves these as temperature ROI boundaries in a text file.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
     suffix = "ST_B10_CROPPED"
     image_paths = [
         os.path.join(settings.IMAGES_DATASET.ROI_CROPPED_DATASET_PATH, file)
