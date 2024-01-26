@@ -11,6 +11,8 @@ Development of the submission for the NASA's challenge to create a visualization
 
 The visual representation depicts annual climate trends in [Los Glaciares National Park, Argentina](https://whc.unesco.org/en/list/145/), from 2013 to 2024. The visualization reveals a warmer climate, evidenced by a positive slope in surface temperature, along with a decreasing trend in the percentage of snow cover, indicating the impact of climate change. This comprehensive analysis uses the [Landsat Collection-2 Level-2](https://www.usgs.gov/landsat-missions/landsat-collection-2-level-2-science-products) data set for the Landsat 8 and 9 OLI/TIRS satellites. The main Sustainable Development Goal (SDG) addressed is [SDG 13: Climate Action](https://www.un.org/sustainabledevelopment/climate-change/). The tools used for this visualization include Python for data processing, Matplotlib for plotting, and Geographic Information System (GIS) tools for spatial analysis.
 
+![Final Visual Example](https://github.com/cristianrubioa/pale-blue-dot-challenge/blob/main/dataset/frame_visualization/visual.png)
+
 
 ## Dataset
 
