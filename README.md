@@ -1,11 +1,19 @@
 # pale-blue-dot-challenge
 
-...
+Development of the submission for the NASA's challenge to create a visualization using Earth observation data that advances at least one of the following Sustainable Development Goals (SDGs):
 
-## Description
-...
+*  Zero Hunger
+*  Clean Water and Sanitation
+*  Climate Action
+
+
+## Summary
+
+The visual representation depicts annual climate trends in [Los Glaciares National Park, Argentina](https://whc.unesco.org/en/list/145/), from 2013 to 2024. The visualization reveals a warmer climate, evidenced by a positive slope in surface temperature, along with a decreasing trend in the percentage of snow cover, indicating the impact of climate change. This comprehensive analysis uses the [Landsat Collection-2 Level-2](https://www.usgs.gov/landsat-missions/landsat-collection-2-level-2-science-products) data set for the Landsat 8 and 9 OLI/TIRS satellites. The main Sustainable Development Goal (SDG) addressed is [SDG 13: Climate Action](https://www.un.org/sustainabledevelopment/climate-change/). The tools used for this visualization include Python for data processing, Matplotlib for plotting, and Geographic Information System (GIS) tools for spatial analysis.
+
 
 ## Dataset
+
 The [USGS EarthExplorer](https://earthexplorer.usgs.gov/) is the source of our satellite imagery datasets. We utilized the **Landsat Collection 2 Level 2** dataset from **Landsat 8 and 9 OLI/TIRS C2 L2** satellites. These datasets provide high-resolution images with atmospheric and geometric corrections, making them ideal for detailed earth surface analysis.
 
 Sample images are available for testing via this Google Drive link: [Sample dataset](https://drive.google.com/drive/folders/1_DUHhFlpFfi1zrTE6V-uOZayNhzoUo3I?usp=sharing). These samples cover an area of interest as defined by the shapefile files. Access the shapefile folder in the repository [here](https://github.com/cristianrubioa/pale-blue-dot-challenge/tree/main/shapefile). The Google Drive folder contains a broader sample of our collected images. Due to space limitations in the repository, only a couple of images are included [here](https://github.com/cristianrubioa/pale-blue-dot-challenge/tree/main/dataset/original) as a tool demonstration.
