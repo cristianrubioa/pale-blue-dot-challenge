@@ -152,4 +152,4 @@ See the final result of one of the images comprising the final output, generated
 ![Final Image Example](https://github.com/cristianrubioa/pale-blue-dot-challenge/blob/main/dataset/frame_visualization/20130813_VIDEO_FRAME.png)
 
 ### Main Jupyter Lab
-This explains the end-to-end process for obtaining the final visualization and results. If you're interested in a quick implementation of this visualization, open this lab in Colab. This bypasses the need to set up a virtual environment and install dependencies. Ensure it's synchronized with your images on Drive, for example.
+This explains the end-to-end process for obtaining the final visualization and results. If you're interested in a quick implementation of this visualization, open [this lab](https://github.com/cristianrubioa/pale-blue-dot-challenge/blob/main/lab/main_process.ipynb) in Colab. This bypasses the need to set up a virtual environment and install dependencies. Ensure it's synchronized with your images on Drive, for example.
