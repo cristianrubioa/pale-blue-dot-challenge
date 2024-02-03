@@ -6,19 +6,48 @@ Development of the submission for the NASA's challenge to create a visualization
 *  Clean Water and Sanitation
 *  Climate Action
 
+## Table of Contents
 
+1. [Summary](#summary)
+2. [Dataset](#dataset)
+3. [Prerequisites](#prerequisites)
+4. [Project Setup](#project-setup)
+5. [Usage](#usage)
+   - [CLI and/or Demo Jupyter Lab](#cli-andor-demo-jupyter-lab)
+     - [Generate Image Metadata](#generate-image-metadata)
+     - [Clip the Area of Interest in the Image](#clip-the-area-of-interest-in-the-image)
+     - [Calculate the Temperature of the ROI for Each Image](#calculate-the-temperature-of-the-roi-for-each-image)
+     - [Create the Temperature Image](#create-the-temperature-image)
+     - [Create the True Color Image](#create-the-true-color-image)
+     - [Create the Binary Image](#create-the-binary-image)
+     - [Calculate and Store Snow Cover Percentages](#calculate-and-store-snow-cover-percentages)
+     - [Generate the NDSI Image](#generate-the-ndsi-image)
+     - [Calculate Cloud Existence](#calculate-cloud-existence)
+     - [Final Combined Image](#final-combined-image)
+6. [Main Jupyter Lab](#main-jupyter-lab)
+
+  
 ## Summary
 
 The visual representation depicts annual climate trends in [Los Glaciares National Park, Argentina](https://whc.unesco.org/en/list/145/), from 2013 to 2024. The visualization reveals a warmer climate, evidenced by a positive slope in surface temperature, along with a decreasing trend in the percentage of snow cover, indicating the impact of climate change. This comprehensive analysis uses the [Landsat Collection-2 Level-2](https://www.usgs.gov/landsat-missions/landsat-collection-2-level-2-science-products) data set for the Landsat 8 and 9 OLI/TIRS satellites. The main Sustainable Development Goal (SDG) addressed is [SDG 13: Climate Action](https://www.un.org/sustainabledevelopment/climate-change/). The tools used for this visualization include Python for data processing, Matplotlib for plotting, and Geographic Information System (GIS) tools for spatial analysis.
 
-![Final Visual Example](https://github.com/cristianrubioa/pale-blue-dot-challenge/blob/main/dataset/frame_visualization/visual.png)
+<p align="center">
+  <img src="https://github.com/cristianrubioa/pale-blue-dot-challenge/blob/main/images/historic.gif" alt="Historic Example">
+</p>
 
 
 ## Dataset
 
 The [USGS EarthExplorer](https://earthexplorer.usgs.gov/) is the source of our satellite imagery datasets. We utilized the **Landsat Collection 2 Level 2** dataset from **Landsat 8 and 9 OLI/TIRS C2 L2** satellites. These datasets provide high-resolution images with atmospheric and geometric corrections, making them ideal for detailed earth surface analysis.
 
-Sample images are available for testing via this Google Drive link: [Sample dataset](https://drive.google.com/drive/folders/1_DUHhFlpFfi1zrTE6V-uOZayNhzoUo3I?usp=sharing). These samples cover an area of interest as defined by the shapefile files. Access the shapefile folder in the repository [here](https://github.com/cristianrubioa/pale-blue-dot-challenge/tree/main/shapefile). The Google Drive folder contains a broader sample of our collected images. Due to space limitations in the repository, only a couple of images are included [here](https://github.com/cristianrubioa/pale-blue-dot-challenge/tree/main/dataset/original) as a tool demonstration.
+Sample images are available for testing via this Google Drive link: [Sample dataset](https://drive.google.com/drive/folders/1_DUHhFlpFfi1zrTE6V-uOZayNhzoUo3I?usp=sharing). These samples cover an area of interest as defined by the shapefile files. Access the shapefile folder in the repository [here](https://github.com/cristianrubioa/pale-blue-dot-challenge/tree/main/shapefile). The Google Drive folder contains a broader sample of our collected images. Due to space limitations in the repository, only a couple of images are included [dataset/original](https://github.com/cristianrubioa/pale-blue-dot-challenge/tree/main/dataset/original) as a tool demonstration.
+<p align="center">
+  <img src="https://github.com/cristianrubioa/pale-blue-dot-challenge/blob/main/images/dataset.gif" alt="Dataset Example">
+</p>
+
+**Additional Comment on Image Selection:**
+During the image selection process (as shown in the previous GIF), the first step was to choose the area of interest. Then, within the known database and collection, a key criterion for selection was that the cloud cover percentage ranged from **0% to 25%**. This metric allowed us to find several suitable images for download. Subsequently, we expanded our selection criterion to a range of **0% to 50%** cloud cover. The reason for this expansion is that, although the total area of the image could have cloud coverage of up to **25%** or **50%**, the specific area of interest we marked might not be affected by cloudiness. This process was manual, involving a review of each image to ensure the quality and relevance of the selected images for our analysis.
+
 
 ## Prerequisites
 
@@ -65,7 +94,7 @@ Follow these steps to set up the project:
 ## Usage
 We've encapsulated certain tasks within the code. While [frame_image_processor](https://github.com/cristianrubioa/pale-blue-dot-challenge/blob/main/src/frame_image_processor.py) generates individual images for video creation using [frame_video_processor](https://github.com/cristianrubioa/pale-blue-dot-challenge/blob/main/src/frame_video_processor.py), pre-processing is required to organize everything.
 
-### CLI and/or Jupyter Lab Demo
+### CLI and/or Demo Jupyter Lab
 A basic guide to using the functions:
 
 #### Generate Image Metadata
@@ -106,7 +135,7 @@ oibur make clipped
 ```
 In the lab, `process_and_clip_landsat_images` is used. This command crops the images, focusing only on the desired area. The downloaded images are large in terms of coverage, so we select a specific area of interest, defined using shapefiles. Check the path [dataset/roi_clipped](https://github.com/cristianrubioa/pale-blue-dot-challenge/tree/main/dataset/roi_clipped).
 
-#### Calculate the Temperature of the Region of Interest (ROI) for Each Image
+#### Calculate the Temperature of the ROI for Each Image
 ```
 oibur make temproi
 ```
@@ -149,7 +178,6 @@ This process is manual and involves identifying images with clouds. Updates are 
 
 #### Final Combined Image
 See the final result of one of the images comprising the final output, generated using `main_image_frame_visualization` from [frame_image_processor](https://github.com/cristianrubioa/pale-blue-dot-challenge/blob/main/src/frame_image_processor.py).
-![Final Image Example](https://github.com/cristianrubioa/pale-blue-dot-challenge/blob/main/dataset/frame_visualization/20130813_VIDEO_FRAME.png)
 
 ### Main Jupyter Lab
 This explains the end-to-end process for obtaining the final visualization and results. If you're interested in a quick implementation of this visualization, open [this lab](https://github.com/cristianrubioa/pale-blue-dot-challenge/blob/main/lab/main_process.ipynb) in Colab. This bypasses the need to set up a virtual environment and install dependencies. Ensure it's synchronized with your images on Drive, for example.
