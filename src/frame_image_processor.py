@@ -581,7 +581,6 @@ def main_image_frame_visualization():
             fontsize=14,
             fontweight="bold",
             color="white",
-            # x=0.05,
             y=1.05,
             bbox={
                 "facecolor": "#ff5555",
