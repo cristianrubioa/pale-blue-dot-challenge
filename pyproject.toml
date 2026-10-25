@@ -17,10 +17,7 @@ autoflake = "^2.2.1"
 pydantic = "^2.5.3"
 pydantic-settings = "^2.1.0"
 rasterio = "^1.3.9"
-# geopandas 0.14.x reads fiona.path at import time; fiona >=1.10 dropped that
-# implicit import, so geopandas.read_file breaks above this pin.
-geopandas = "^0.14.2"
-fiona = "1.9.6"
+geopandas = "^1.1.2"
 gdal = "3.4.1"
 matplotlib = "^3.8.2"
 typer = "^0.9.0"
