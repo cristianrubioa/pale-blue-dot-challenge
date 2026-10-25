@@ -68,12 +68,15 @@ Follow these steps to set up the project:
    ```
 
 2. **Install GDAL**:
-   This project requires GDAL version 3.4.1 with NumPy support. Use the following command for the correct installation:
+   This project requires GDAL version 3.4.1 with NumPy support. The pip package only builds its NumPy array
+   extension (`osgeo._gdal_array`) if NumPy is visible outside of pip's isolated build environment, so it must be
+   reinstalled with build isolation disabled, after `poetry install` has already put NumPy in place:
    ```bash
-   poetry run pip install --no-cache-dir --force-reinstall 'GDAL[numpy]==3.4.1'
+   poetry run pip install --no-cache-dir --force-reinstall --no-deps --no-build-isolation 'gdal==3.4.1'
    ```
 
-   This ensures the proper version and configuration of GDAL.
+   Do not use the `GDAL[numpy]` extra: it has no upper bound on the NumPy version, so it pulls the latest NumPy
+   major release and breaks the `numpy<2` pin required by matplotlib/scipy/pandas in this project.
 
 3. **Activate the Virtual Environment**:
    Activate the Poetry-created virtual environment with:
